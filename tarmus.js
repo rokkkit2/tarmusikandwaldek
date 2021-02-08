@@ -8,8 +8,8 @@ bot.login(process.env.token);//process.env.token
 
 bot.on("ready", () => {
 
-    console.log("alek on");
-    bot.user.setActivity('ALEK', { type: 'WATCHING' }); //PLAYING, STREAMING, LISTENING, WATCHING, CUSTOM_STATUS
+    console.log("tarmus on");
+    bot.user.setActivity('TARMUS', { type: 'WATCHING' }); //PLAYING, STREAMING, LISTENING, WATCHING, CUSTOM_STATUS
 });
 
 client = new Client('943d5f841e921509867c274dbf6e16c8', {
@@ -127,10 +127,10 @@ async function main(){
     }
     async function discord(){  
       try{
-        await page.screenshot({path: `ekwipunekalek.png`, fullPage: true});
-        const well = bot.channels.cache.get("804688857219203153")
-        await well.send({files: [`./ekwipunekalek.png`]});
-        const path = `./ekwipunekalek.png`
+        await page.screenshot({path: `ekwipunektarmus.png`, fullPage: true});
+        const well = bot.channels.cache.get("804689403746320414")
+        await well.send({files: [`./ekwipunektarmus.png`]});
+        const path = `./ekwipunektarmus.png`
         await fs.unlinkSync(path)
       } catch (e) {} 
     }
