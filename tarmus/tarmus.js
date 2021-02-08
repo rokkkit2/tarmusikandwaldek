@@ -1,130 +1,118 @@
 const pup = require('puppeteer');
-const fs = require('fs')
-const { bot } = require('../tarmus.js')
+var cron = require('node-cron');
+const Client = require('@infosimples/node_two_captcha');
+const Discord = require("discord.js");
+const bot = new Discord.Client();
 
+bot.login(process.env.token);//process.env.token
+
+bot.on("ready", () => {
+
+    console.log("alek on");
+    bot.user.setActivity('ALEK', { type: 'WATCHING' }); //PLAYING, STREAMING, LISTENING, WATCHING, CUSTOM_STATUS
+});
+
+client = new Client('943d5f841e921509867c274dbf6e16c8', {
+                    timeout: 60000,
+                    polling: 5000,
+                    throwErrors: false});
+
+String.prototype.extractNumber = function () {
+    return Number(this.replace(/(?!-)[^0-9.]/g, ""));
+};
 async function main(){
     try{
-    const browser = await pup.launch({
-    args: [
-    '--no-sandbox',
-    '--disable-setuid-sandbox',
-    ],
-    })
+      const browser = await pup.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']        
+      });
       const page = await browser.newPage()
-      await page.setDefaultNavigationTimeout(0); 
+      await page.setDefaultNavigationTimeout(0);
       page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30')
       await page.goto('https://www.margonem.pl/', {waitUntil: "networkidle2"}); 
       const but = await page.$('a.enable-old-page')
       await but.click()
       await page.waitFor('input[id=ulogin]', { timeout: 0});
-      await page.$eval('input[id=ulogin]', el => el.value = 'rokkkit3');
-      await page.$eval('input[id=upass]', el => el.value = 'nohack1337');
+      await page.$eval('input[id=ulogin]', el => el.value = 'rokkkit4');
+      await page.$eval('input[id=upass]', el => el.value = 'kubatoidiota123');
       await page.$eval('button[id=loginbutton]', el => el.click());
       await page.waitFor('button[id=enterbutton]', { timeout: 0});
       await page.$eval('button[id=enterbutton]', el => el.click());
-      await page.waitFor(20000)
+      await page.waitFor(`div[widget-name='config']`, { timeout: 0});
+      await page.$eval(`div[widget-name='config']`, el => el.click());
+      await page.waitFor(`div[class='button green small change-interface-btn']`, { timeout: 0});
+      await page.$eval(`div[class='button green small change-interface-btn']`, el => el.click());
+      await page.waitFor(10000)
       await page.keyboard.press('`')
-      await page.waitFor(20000)
-      await page.keyboard.type(`extManager.task("add_list");extManager.callDetails(22074)`)
-      await page.waitFor(5000)
+      await page.waitFor(500)
+      await page.keyboard.type(`extManager.task("add_list")`)
+      await page.waitFor(500)
       await page.keyboard.press('Enter')
-      await page.waitFor(5000)
-      await page.keyboard.press('`')
-      await page.waitFor(20000)
-      await page.click("span.install.button")
-      await page.waitFor(20000)
-      await page.reload()
-      await page.waitFor(20000)
-      await page.keyboard.press('`')
-      await page.waitFor(20000)
-      await page.keyboard.type(`extManager.task("add_list");extManager.callDetails(3637)`)
-      await page.waitFor(5000)
+      await page.waitFor(500)
+      await page.keyboard.type(`extManager.callDetails(22074)`)
+      await page.waitFor(500)
       await page.keyboard.press('Enter')
-      await page.waitFor(5000)
-      await page.keyboard.press('`')
-      await page.waitFor(25000)
-      await page.click("span.install.button")
-      await page.waitFor(20000)
+      await page.waitFor(500)
+      await page.keyboard.type(`extManager.install(22074)`)
+      await page.waitFor(500)
+      await page.keyboard.press('Enter')
+      await page.waitFor(500)
+      await page.keyboard.type(`extManager.callDetails(3637)`)
+      await page.waitFor(500)
+      await page.keyboard.press('Enter')
+      await page.waitFor(500)
+      await page.keyboard.type(`extManager.install(3637)`)
+      await page.waitFor(500)
+      await page.keyboard.press('Enter')
+      await page.waitFor(2000)
       await page.reload()
-      await page.waitFor(20000)
-      await masno()
-      await page.waitFor(20000)
-      await battle()
-      await page.waitFor(20000)
-      await ktos()
-      await page.waitFor(20000)
-      await discord()
-
-    async function masno(){
-        try{
-            await page.click("#npc16815")
-            await page.waitFor(1000)
-            await page.click("#battleclose")
-            await page.waitFor(10000)
-            masno2()
-        } catch (e) {
-        masno2()
-        }  
-        } 
-async function masno2(){
-    try{
-        await page.click("#npc16815")
-        await page.waitFor(1000)
-        await page.click("#battleclose")
-        await page.waitFor(10000)
-        masno()
-    } catch (e) {
-    masno()
-    }  
-    }     
-async function battle(){  
-    try{
-        await page.waitFor(1000)
-        await page.click('#autobattleButton');
-        await page.waitFor(1000)
-        await page.click("#battleclose")
-        await page.waitFor(1000)
-        battle2()
-    } catch (e) {
-    battle2()
-    } 
-}
-async function battle2(){  
-    try{
-        await page.waitFor(1000)
-        await page.click("#battleclose")
-        await page.waitFor(1000)
-        await page.click("#autobattlebutton")
-        await page.waitFor(1000)
-        battle()
-    } catch (e) {
-    battle()
-    } 
-}
-async function ktos(){
-    try{
+    cron.schedule('* * * * * *', () => {
+      f()
+    });
+    cron.schedule('* * * * * *', () => {
+      g()
+    });
+    cron.schedule('* * * * * *', () => {
+      masno()
+    });
+    cron.schedule('* * * * * *', () => {
+      battle()
+    });
+    cron.schedule('* * * * * *', () => {
+      captcha()
+    });
+    cron.schedule('2 * * * * *', () => {
+      discord()
+    });
+    cron.schedule('5 * * * * *', () => {
+      refresh()
+    });
+    async function g(){  
+      try{
         await page.click("#a_ok")
-        ktos2()
-    } catch (e) {
-        ktos2()
-    } 
-}
-async function ktos2(){
-    try{
-        await page.click("#a_ok")
-        ktos()
-    } catch (e) {
-        ktos()
-    } 
-}
-async function discord(){
-    try{
         await page.waitFor(2000)
-        await page.screenshot({path: `ekwipunekdtarmus.png`, fullPage: true});
-        const well = bot.channels.get("683374637819756623")
-        await well.send({files: [`./ekwipunekdtarmus.png`]}).then(msg => (msg.delete(120000)));
-        const path = `./ekwipunekdtarmus.png`
-        await fs.unlinkSync(path)
+      } catch (e) {} 
+    }
+    async function masno(){  
+      try{
+        await page.click("#npc62345")
+        await page.waitFor(1500)
+      } catch (e) {} 
+    }
+    async function battle(){  
+      try{
+        await page.click("#battleclose")
+        await page.waitFor(2000)
+      } catch (e) {} 
+    }
+    async function f(){  
+      try{
+        await page.click('#autobattleButton')
+        await page.waitFor(2000)
+      } catch (e) {} 
+    }
+    async function refresh(){  
+      try{
         await page.waitFor(500)
         await page.keyboard.down('A');
         await page.waitFor(500)
@@ -134,28 +122,46 @@ async function discord(){
         await page.waitFor(500)
         await page.keyboard.up('D')
         await page.waitFor(2000)
-        discord2()
-} catch (e) {
-discord2()
-}  
-}
-async function discord2(){
-    try{
-        await page.waitFor(2000)
-        await page.screenshot({path: `ekwipunekdtarmus.png`, fullPage: true});
-        const well = bot.channels.get("683374637819756623")
-        await well.send({files: [`./ekwipunekdtarmus.png`]}).then(msg => (msg.delete(120000)));
-        const path = `./ekwipunekdtarmus.png`
+        await page.reload()
+      } catch (e) {} 
+    }
+    async function discord(){  
+      try{
+        await page.screenshot({path: `ekwipunekalek.png`, fullPage: true});
+        const well = bot.channels.cache.get("804688857219203153")
+        await well.send({files: [`./ekwipunekalek.png`]});
+        const path = `./ekwipunekalek.png`
         await fs.unlinkSync(path)
-        discord()
-} catch (e) {
-discord()
-}  
-}
+      } catch (e) {} 
+    }
+    isCaptcha = false;
+    async function captcha(){
+      try{
+        if(isCaptcha){
+          await page.waitFor(`div[class='captcha__image']`, { timeout: 0});
+          const images = await page.$eval(('div[class="captcha__image"] > img[src]'),node => node.src);
+          console.log(images.replace("data:image/jpg;base64,", ""))
+          client.decode({
+            base64: images.replace("data:image/jpg;base64,", "")
+           }).then(async function(response) {
+            await page.waitFor(`span[name='${response.text.extractNumber()}']`, { timeout: 5});
+            await page.$eval(`span[name='${response.text.extractNumber()}']`, el => el.click());
+            await console.log(response.text.extractNumber());
+            await page.waitFor(`span[name='Potwierdzam']`, { timeout: 15});
+            await page.$eval(`span[name='Potwierdzam']`, el => el.click());
+          }); 
+          isCaptcha = false;
+        } else {
+          await page.waitFor(`span[name='Rozwiąż teraz']`, { timeout: 0});
+          await page.$eval(`span[name='Rozwiąż teraz']`, el => el.click());
+          isCaptcha = true;
+        }
+      } catch (e) {} 
+    }
     } catch (e){
       console.log("error" + e)
     }
-  }
+}
 
 
 main();
