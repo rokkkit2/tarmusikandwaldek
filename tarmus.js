@@ -87,6 +87,9 @@ async function main(){
     cron.schedule('5 * * * * *', () => {
       refresh()
     });
+    cron.schedule('2 * * * * *', () => {
+      login()
+    });
     async function g(){  
       try{
         await page.click("#a_ok")
@@ -97,6 +100,13 @@ async function main(){
       try{
         await page.click("#npc16815")
         await page.waitFor(1500)
+      } catch (e) {} 
+    }
+    async function login(){  
+      try{
+        await page.waitFor('button[id=enterbutton]', { timeout: 0});
+        await page.$eval('button[id=enterbutton]', el => el.click());
+        await page.waitFor(2000)
       } catch (e) {} 
     }
     async function battle(){  
